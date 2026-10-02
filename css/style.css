@@ -109,7 +109,7 @@ body {
 
 /* Typography Helpers */
 h1, h2, h3, h4, .brand-font {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   color: #fff;
   font-weight: 700;
   line-height: 1.2;
@@ -557,7 +557,7 @@ h1, h2, h3, h4, .brand-font {
 }
 
 .exp-num {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 2.8rem;
   font-weight: 800;
   color: var(--accent-cyan);
@@ -1074,7 +1074,7 @@ h1, h2, h3, h4, .brand-font {
 }
 
 .calc-total-price {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 1.9rem;
   font-weight: 800;
   color: #fff;
@@ -1105,7 +1105,7 @@ h1, h2, h3, h4, .brand-font {
 }
 
 .step-num {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 2.2rem;
   font-weight: 800;
   color: rgba(99, 102, 241, 0.3);
@@ -1141,7 +1141,7 @@ h1, h2, h3, h4, .brand-font {
 
 .client-logo-item {
   color: #64748b;
-  font-family: 'Syne', sans-serif;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 1.25rem;
   font-weight: 800;
   letter-spacing: 1px;
