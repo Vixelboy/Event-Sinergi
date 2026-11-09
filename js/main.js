@@ -143,16 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
       year: '2024',
       desc: 'Eksekusi direct promo activation produk Unilever (Pepsodent, Lifebuoy, Citra). Menyediakan manpower terlatih (SPG / Brand Ambassador & Event Coordinator), booth display, sound system interaktif untuk promo & announcement, serta games belanja berhadiah.'
     },
-    'item-1': {
-      title: 'Global Tech Gala & Award 2024',
-      category: 'corporate',
-      badge: 'Corporate Gala',
-      image: 'assets/images/hero.jpg',
-      client: 'PT. Quantum Tech Nusantara',
-      scale: '1.200 Peserta',
-      year: '2024',
-      desc: 'Penyelenggaraan annual gala dinner dan apresiasi insan teknologi terbesar, dilengkapi panggung curved LED 360°, lightning show dramatis, dan manajemen pertunjukan musisi nasional secara terintegrasi.'
-    },
+
     'item-2': {
       title: 'Aurora X1 Grand Launching',
       category: 'activation',
