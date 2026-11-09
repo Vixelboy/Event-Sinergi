@@ -5,6 +5,62 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  // 0. Theme Management (Default: Cerah / Light, with Toggle to Gelap / Dark)
+  const themeToggleDesktop = document.getElementById('themeToggle');
+  const themeToggleMobile = document.getElementById('themeToggleMobile');
+  const themeToggleDrawer = document.getElementById('themeToggleDrawer');
+  const navLinks = document.getElementById('navLinks');
+
+  function getSavedTheme() {
+    return localStorage.getItem('smp_theme') || 'light';
+  }
+
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('smp_theme', theme);
+
+    const isDark = (theme === 'dark');
+
+    const buttons = [themeToggleDesktop, themeToggleMobile, themeToggleDrawer].filter(Boolean);
+    buttons.forEach(btn => {
+      const sunIcon = btn.querySelector('.theme-icon-sun');
+      const moonIcon = btn.querySelector('.theme-icon-moon');
+      const textLabel = btn.querySelector('.theme-toggle-text');
+
+      if (sunIcon) sunIcon.style.display = isDark ? 'inline-block' : 'none';
+      if (moonIcon) moonIcon.style.display = isDark ? 'none' : 'inline-block';
+
+      if (textLabel) {
+        if (btn === themeToggleDesktop) {
+          textLabel.textContent = isDark ? 'Tema Cerah' : 'Lihat Tema Gelap';
+        } else {
+          textLabel.textContent = isDark ? 'Mode Cerah' : 'Mode Gelap';
+        }
+      }
+
+      btn.setAttribute('aria-label', isDark ? 'Ganti ke Tema Cerah' : 'Ganti ke Tema Gelap');
+      btn.setAttribute('title', isDark ? 'Ganti ke Tema Cerah' : 'Ganti ke Tema Gelap');
+    });
+  }
+
+  function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    applyTheme(nextTheme);
+  }
+
+  if (themeToggleDesktop) themeToggleDesktop.addEventListener('click', toggleTheme);
+  if (themeToggleMobile) themeToggleMobile.addEventListener('click', toggleTheme);
+  if (themeToggleDrawer) {
+    themeToggleDrawer.addEventListener('click', () => {
+      toggleTheme();
+      if (navLinks) navLinks.classList.remove('active');
+    });
+  }
+
+  // Initialize theme button states on load
+  applyTheme(getSavedTheme());
+
   // 1. Sticky Navbar on Scroll
   const navWrapper = document.querySelector('.navbar-wrapper');
   window.addEventListener('scroll', () => {
@@ -17,7 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 2. Mobile Menu Toggle
   const mobileToggle = document.getElementById('mobileToggle');
-  const navLinks = document.getElementById('navLinks');
   if (mobileToggle && navLinks) {
     mobileToggle.addEventListener('click', () => {
       navLinks.classList.toggle('active');
@@ -52,6 +107,31 @@ document.addEventListener('DOMContentLoaded', () => {
       scale: 'Exhibition Hall On-Site',
       year: '2024',
       desc: 'Eksekusi fabrikasi dan instalasi on-site venue setup booth pameran Aveeno Baby. Realisasi 100% presisi sesuai desain 3D awal, lengkap dengan instalasi spotlight panggung, display shelf produk, backdrop grafis, dan counter pameran.'
+    },
+    'item-booth-tam1': {
+      title: 'Custom Exhibition Booth',
+      category: 'booth',
+      badge: 'Venue Setup & Booth',
+      image: 'assets/images/boothtam1.jpg',
+      client: 'Corporate Partner Expo',
+      scale: 'Exhibition Hall Booth',
+      year: '2024',
+      desc: 'Konsep booth pameran modern dan fungsional dengan material berkualitas tinggi, pencahayaan terintegrasi, dan area display produk yang optimal untuk menarik perhatian pengunjung expo.'
+    },
+    'item-vinda': {
+      title: 'Exhibition Booth Setup - Vinda',
+      category: 'booth',
+      badge: 'Venue Setup & Booth',
+      image: 'assets/images/Vinda 1.jpeg',
+      client: 'Vinda Indonesia',
+      scale: 'Exhibition Booth & Product Showcase',
+      year: '2024',
+      desc: 'Fabrikasi dan tata ruang venue booth pameran eksklusif untuk brand Vinda. Menghadirkan instalasi booth berkonsep modern dan elegan, dilengkapi rak display produk tertata rapi, lighting sorot presisi, serta material premium untuk memaksimalkan brand experience pengunjung pameran.',
+      thumbnails: [
+        'assets/images/Vinda 2.jpeg',
+        'assets/images/Vinda 3.jpeg',
+        'assets/images/Vinda 4.jpeg'
+      ]
     },
     'item-unilever': {
       title: 'Brand Activation & On-Ground Manpower - Unilever Campaign',
@@ -92,6 +172,16 @@ document.addEventListener('DOMContentLoaded', () => {
       scale: '8.500 Penonton',
       year: '2024',
       desc: 'Festival musik multi-genre 2 hari dengan tata panggung raksasa rigging 20x14m, pyrotechnics kembang api sinkron musik, sistem ticketing digital cashless, serta crowd control berstandar internasional.'
+    },
+    'item-corpo-tam1': {
+      title: 'Corporate Event & Kids Creative Corner',
+      category: 'corporate',
+      badge: 'Corporate Event',
+      image: 'assets/images/corpotam1.jpg',
+      client: 'Kids Topia / Family Gathering Partner',
+      scale: 'Family Event & Exhibition',
+      year: '2024',
+      desc: 'Pengelolaan venue setup panggung interaktif, area lomba kreasi anak, dan dekorasi tematik ramah keluarga dengan koordinasi tim lapangan yang solid dan penuh kehangatan.'
     }
   };
 
@@ -104,6 +194,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalScale = document.getElementById('modalScale');
   const modalYear = document.getElementById('modalYear');
   const modalClose = document.getElementById('modalClose');
+  const modalGallery = document.getElementById('modalGallery');
+  const modalThumbnails = document.getElementById('modalThumbnails');
 
   document.querySelectorAll('.portfolio-card').forEach(card => {
     card.addEventListener('click', () => {
@@ -117,6 +209,39 @@ document.addEventListener('DOMContentLoaded', () => {
         modalClient.textContent = item.client;
         modalScale.textContent = item.scale;
         modalYear.textContent = item.year;
+
+        // Render thumbnails jika tersedia (seperti Vinda 2, 3, 4)
+        if (modalGallery && modalThumbnails) {
+          if (item.thumbnails && item.thumbnails.length > 0) {
+            modalGallery.style.display = 'block';
+            modalThumbnails.innerHTML = '';
+
+            item.thumbnails.forEach((thumbSrc, index) => {
+              const thumbItem = document.createElement('div');
+              thumbItem.className = 'modal-thumb-item';
+              thumbItem.title = `Klik untuk melihat detail ${index + 1}`;
+              thumbItem.innerHTML = `<img src="${thumbSrc}" alt="${item.title} - Foto ${index + 2}">`;
+
+              thumbItem.addEventListener('click', () => {
+                // Toggle preview gambar besar
+                if (thumbItem.classList.contains('active')) {
+                  thumbItem.classList.remove('active');
+                  modalImg.src = item.image;
+                } else {
+                  modalThumbnails.querySelectorAll('.modal-thumb-item').forEach(t => t.classList.remove('active'));
+                  thumbItem.classList.add('active');
+                  modalImg.src = thumbSrc;
+                }
+              });
+
+              modalThumbnails.appendChild(thumbItem);
+            });
+          } else {
+            modalGallery.style.display = 'none';
+            modalThumbnails.innerHTML = '';
+          }
+        }
+
         modalOverlay.classList.add('active');
         document.body.style.overflow = 'hidden';
       }
