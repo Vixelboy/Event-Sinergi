@@ -1907,7 +1907,8 @@ textarea.form-control {
 .footer-bottom {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  text-align: center;
   padding-top: 2rem;
   border-top: 1px solid var(--border-light);
   font-size: 0.85rem;
